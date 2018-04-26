@@ -28,3 +28,7 @@ Then within this repository, run
 
 You can stop all syncers by hitting Ctrl-c.
 
+## Gotchas
+- You cannot use $HOME in your remote path
+- Changes in git submodules are not synced (yet. Working on it!)
+
