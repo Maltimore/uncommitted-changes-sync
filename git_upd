@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# credit: chrstphr
+
+git -C "${1}" diff origin/master | ssh "${2}" " git -C '${3}' reset --hard origin/master; git -C '${3}' clean -df; git -C '${3}' apply --whitespace=nowarn - "
+

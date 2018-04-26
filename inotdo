@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# credit: chrstphr
+
+last="$(date +%s%3N)"
+inotifywait -mrqe modify -e create -e delete $2 | while read event; do
+    this="$(date +%s%3N)"
+
+	# if last update is more than 100 msecs ago
+    if [ $(($this - $last)) -gt 100 ]; then
+		# sleeping to wait for all incoming inotify events which we don't want to process
+		sleep 0.1
+		echo event handled "$(date +%H:%M:%S)" "$event"
+		"$@" 2>&1 | awk '{print " ",$0}'
+		last="$(date +%s%3N)"
+	else
+		echo event skipped "$(date +%H:%M:%S)" "$event"
+    fi;
+done;
+

@@ -1,0 +1,21 @@
+# trap to kill processes that we start in this script when this script finishes
+trap "kill 0" EXIT
+
+# loop over lines in config file
+cat config | while read localpath_unexpanded host remotepath; do
+	# in case there's something like $HOME in the localpath, evaluate it 
+	eval localpath=$localpath_unexpanded
+
+	echo New location
+	echo "  " localpath: "$localpath"
+	echo "  " host: "$host"
+	echo "  " remotepath: "$remotepath"
+
+	./inotdo ./git_upd $localpath $host $remotepath &
+done;
+echo "Done setting up syncers."
+echo " "
+
+# wait for user input
+read
+
