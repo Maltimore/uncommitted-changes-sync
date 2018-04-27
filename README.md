@@ -24,7 +24,7 @@ Create a file ```config``` within this folder. It should have one line per repos
 
 Then within this repository, run 
 
-```sync```.
+```./sync```.
 
 You can stop all syncers by hitting Ctrl-c.
 
