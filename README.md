@@ -33,5 +33,6 @@ You can stop all syncers by hitting Ctrl-c.
 
 ## Gotchas
 - You cannot use $HOME in your remote path
-- Changes in git submodules are not synced (yet. Working on it!)
+- Changes in git submodules are not synced. However, you can sync each submodule individually by including them as extra repos in the ```config``` file
+- Your local and remote repository should be on the same branch, and origin/head must point to the same commit. You can however make commits locally, as long as you don't push them. Once you push, you need to pull on the remote.
 
