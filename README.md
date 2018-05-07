@@ -6,8 +6,10 @@ You are working on a git code repository that you want to run/debug on a server/
 ## CAUTION
 This will **DELETE** all untracked files and folders in your remote repository every time it syncs (unless they are in your .gitignore).
 
-## Usage
+
+## Installation
 This **only works on Linux**.
+You need the program ```inotifywait``` installed locally. On ubuntu, it can be found in ```inotify-tools```.
 Clone this repository and enter it. You have to make the three files ```sync```, ```git_upd``` and ```inotdo``` executable. You can do this using
 
 ```
@@ -16,6 +18,7 @@ chmod u+x git_upd
 chmod u+x inotdo
 ```
 
+## Usage
 Create a file ```config``` within this folder. It should have one line per repository that you want to sync (syncing one local repository with multiple remots is also possible). In each line, you should have first the path to the local repository, then the ssh-name of the remote host, and then the remote path to the repository. Like so:
 
 ```
