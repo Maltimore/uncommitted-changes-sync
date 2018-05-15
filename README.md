@@ -25,6 +25,10 @@ Create a file ```config``` within this folder. It should have one line per repos
 /home/maltimore/myrepo mycluster /home/remote_user/myrepo
 ```
 
+If you haven't done so already, you should add your ssh-key to the ssh-daemon with
+
+```ssh-add```.
+
 Then within this repository, run 
 
 ```./sync```.
