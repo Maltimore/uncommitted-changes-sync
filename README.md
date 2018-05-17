@@ -40,3 +40,4 @@ You can stop all syncers by hitting Ctrl-c.
 - Changes in git submodules are not synced. However, you can sync each submodule individually by including them as extra repos in the ```config``` file
 - Your local and remote repository should be on the same branch, and origin/head must point to the same commit. You can however make commits locally, as long as you don't push them. Once you push, you need to pull on the remote.
 - Uncommenting lines in the config (for instance with ```#```) doesn't work yet. Todo!
+- If your diff is empty, the output from the server will be 'unrecognized input'. Nothing bad happens, but it can be confusing.
