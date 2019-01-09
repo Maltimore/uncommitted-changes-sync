@@ -10,12 +10,12 @@ This will **DELETE** all untracked files and folders in your remote repository e
 ## Installation
 This **only works on Linux**.
 You need the program ```inotifywait``` installed locally. On ubuntu, it can be found in ```inotify-tools```.
-Clone this repository and enter it. You have to make the three files ```sync```, ```git_upd``` and ```inotdo``` executable. You can do this using
+Clone this repository and enter it. You have to make the three files ```sync```, ```git_upd``` and ```inotifydo``` executable. You can do this using
 
 ```
 chmod u+x sync
 chmod u+x git_upd
-chmod u+x inotdo
+chmod u+x inotifydo
 ```
 
 ## Usage
