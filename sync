@@ -13,7 +13,7 @@ cat config | while read localpath_unexpanded host remotepath; do
 	echo "  " host: "$host"
 	echo "  " remotepath: "$remotepath"
 
-	./inotdo ./git_upd $localpath $host $remotepath &
+	./inotifydo ./git_upd $localpath $host $remotepath &
 done;
 echo " "
 echo "Done setting up syncers."
