@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo Starting uncommitted-changes-sync
 # trap to kill processes that we start in this script when this script finishes
 trap "kill 0" EXIT
@@ -19,6 +20,5 @@ echo " "
 echo "Done setting up syncers."
 echo " "
 
-# wait for user input
-read
-
+# this is elegant!
+sleep infinity
