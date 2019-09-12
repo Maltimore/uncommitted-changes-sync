@@ -10,13 +10,12 @@ This will **DELETE** all untracked files and folders in your remote repository e
 ## Installation
 This **only works on Linux**.
 You need the program ```inotifywait``` installed locally. On ubuntu, it can be found in ```inotify-tools```.
-Clone this repository and enter it. You have to make the three files ```sync```, ```git_upd``` and ```inotifydo``` executable. You can do this using
 
 ```
-chmod u+x sync
-chmod u+x git_upd
-chmod u+x inotifydo
+sudo apt install inotify-tools
 ```
+
+Then clone this repository somewhere on you local computer. That's it!
 
 ## Usage
 Create a file ```config``` within this folder. It should have one line per repository that you want to sync (syncing one local repository with multiple remots is also possible). In each line, you should have first the path to the local repository, then the ssh-name of the remote host, and then the remote path to the repository. Like so:
