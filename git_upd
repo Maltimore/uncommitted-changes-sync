@@ -8,5 +8,5 @@ LDIR="${1:?"Local directory not specified!"}"
 RMTE="${2:?"Remote host not specified!"}"
 RDIR="${3:?"Remote directory not specified!"}"
 
-git -C "$LDIR" diff origin/master | ssh "$RMTE" " git -C '$RDIR' reset --hard origin/master; git -C '$RDIR' clean -df; git -C '$RDIR' apply --whitespace=nowarn - "
+git -C "$LDIR" diff origin/master | ssh "$RMTE" " git -C '$RDIR' reset --hard origin/master && git -C '$RDIR' clean -df && git -C '$RDIR' apply --whitespace=nowarn - "
 
