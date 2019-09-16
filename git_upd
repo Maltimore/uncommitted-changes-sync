@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 # credit: chrstphr
+# $1 is local directory path
+# $2 is ssh remote host
+# $3 is remote directory path
 
-git -C "${1}" diff origin/master | ssh "${2}" " git -C '${3}' reset --hard origin/master; git -C '${3}' clean -df; git -C '${3}' apply --whitespace=nowarn - "
+LDIR="${1:?"Local directory not specified!"}"
+RMTE="${2:?"Remote host not specified!"}"
+RDIR="${3:?"Remote directory not specified!"}"
+
+git -C "$LDIR" diff origin/master | ssh "$RMTE" " git -C '$RDIR' reset --hard origin/master; git -C '$RDIR' clean -df; git -C '$RDIR' apply --whitespace=nowarn - "
 
