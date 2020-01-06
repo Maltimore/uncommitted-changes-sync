@@ -9,13 +9,13 @@ sed -e "/^#\\|^\$/d" < config | while read localpath_unexpanded host remotepath;
     # in case there's something like $HOME in the localpath, evaluate it 
     eval localpath=$localpath_unexpanded
 
-    echo " "
+    echo
     echo Location
-    echo "  " localpath: "$localpath"
-    echo "  " host: "$host"
-    echo "  " remotepath: "$remotepath"
+    echo "  local path:  $localpath"
+    echo "  host:        $host"
+    echo "  remote path: $remotepath"
 
-	./inotifydo ./git_upd $localpath $host $remotepath &
+    ./inotifydo ./git_upd $localpath $host $remotepath &
 done;
 echo " "
 echo "Done setting up syncers."
