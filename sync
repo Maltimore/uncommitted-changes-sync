@@ -17,9 +17,10 @@ sed -e "/^#\\|^\$/d" < config | while read localpath_unexpanded host remotepath;
 
     ./inotifydo ./git_upd $localpath $host $remotepath &
 done;
+
 echo " "
 echo "Done setting up syncers."
 echo " "
 
-# this is elegant!
+# This is elegant, I know!
 sleep infinity
