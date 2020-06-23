@@ -5,7 +5,7 @@ trap "kill 0" EXIT
 
 # loop over lines in config file
 # the sed command removes lines starting with "#" or empty lines
-sed -e "/^#\\|^\$/d" < config | while read localpath_unexpanded host remotepath; do
+sed -e "/^#\\|^\$/d" < "$1" | while read localpath_unexpanded host remotepath; do
     # in case there's something like $HOME in the localpath, evaluate it 
     eval localpath=$localpath_unexpanded
 

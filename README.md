@@ -28,13 +28,15 @@ Lines starting with "#" or empty lines are ignored.
 
 If you haven't done so already, you should add your ssh-key to the ssh-daemon with
 
-```ssh-add```.
+```ssh-add```
 
 Then within this repository, run 
 
-```./sync```.
+```./sync config```
 
-You can stop all syncers by hitting Ctrl-c.
+The first argument "config" just tells sync where to find the config, so if the config is in a different folder:
+
+```./sync /path/to/config```
 
 ## Gotchas
 - You cannot use $HOME in your remote path
