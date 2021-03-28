@@ -10,5 +10,5 @@ REMOTE_DIR="${3:?"Remote directory not specified!"}"
 
 GIT_BRANCH=$(git -C "$LOCAL_DIR" rev-parse --abbrev-ref HEAD)
 
-git -C "$LOCAL_DIR" diff origin/"$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' fetch origin && git -C '$REMOTE_DIR' reset --hard origin/'$GIT_BRANCH' && git -C '$REMOTE_DIR' clean -df && git -C '$REMOTE_DIR' apply --whitespace=nowarn - "
+git -C "$LOCAL_DIR" diff origin/"$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' fetch origin && git -C '$REMOTE_DIR' reset --hard origin/'$GIT_BRANCH' && git -C '$REMOTE_DIR' apply --whitespace=nowarn - "
 
