@@ -13,5 +13,5 @@ GIT_BRANCH=$(git -C "$LOCAL_DIR" rev-parse --abbrev-ref HEAD)
 # git apply --index adds files that are untracked into the index, such that on
 # the next git reset, this file will be deleted. Therefore, there will be no
 # conflicts with untracked files
-git -C "$LOCAL_DIR" diff origin/"$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' fetch origin && git -C '$REMOTE_DIR' reset --hard origin/'$GIT_BRANCH' && git -C '$REMOTE_DIR' apply --index --whitespace=nowarn - "
+git -C "$LOCAL_DIR" diff origin/"$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' reset --hard origin/'$GIT_BRANCH' && git -C '$REMOTE_DIR' apply --index --whitespace=nowarn - "
 
