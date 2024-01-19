@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-echo $(date) Starting uncommitted-changes-sync
+echo Starting uncommitted-changes-sync
 # trap to kill processes that we start in this script when this script finishes
 trap "kill 0" EXIT
 
 SCRIPT_DIR=${0%/*}
-echo "Script dir is: ${SCRIPT_DIR}"
 
 # by default, we expect the config file to be in ~/.config/uncommited_changes_sync
 CONFIG_PATH=${1:-"${HOME}/.config/uncommitted_changes_sync"}
@@ -12,11 +11,12 @@ CONFIG_PATH=${1:-"${HOME}/.config/uncommitted_changes_sync"}
 
 # loop over lines in config file
 # use sed to remove lines starting with "#" or empty lines
+echo Reading config...
 sed -e "/^#\\|^\$/d" < "${CONFIG_PATH}" | while read localpath_unexpanded git_branch host remotepath; do
     # in case there's something like $HOME in the localpath, evaluate it to expand path
     eval localpath=$localpath_unexpanded
     echo
-    echo Location
+    echo Adding new sync repository:
     echo "  local path:  $localpath"
     echo "  git branch:  $git_branch"
     echo "  host:        $host"
@@ -24,7 +24,7 @@ sed -e "/^#\\|^\$/d" < "${CONFIG_PATH}" | while read localpath_unexpanded git_br
     ${SCRIPT_DIR}/inotifydo ${SCRIPT_DIR}/git_upd $localpath $git_branch $host $remotepath &
 done;
 
-echo $(date) "Done setting up syncers."
+echo "Done setting up syncers."
 
 # This is elegant, I know!
 sleep infinity
