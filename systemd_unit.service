@@ -1,0 +1,11 @@
+[Unit]
+Description=Uncommitted changes syncer
+
+[Service]
+Type=simple
+ExecStart=/home/username/repos/uncommitted-changes-sync/sync /home/username/.config/uncommitted-changes-sync
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+

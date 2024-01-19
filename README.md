@@ -48,3 +48,10 @@ Then, run the sync command (adjust the paths):
 - Assuming your comparison branch is `origin/master`, then you need to make sure that `origin/master` points to the same commit locally and remotely. Note that you can make commits locally, even to `master`, as long as you don't push the commits to `origin/master` without pulling on the remote
 - Changes in git submodules are not synced. However, you can sync each submodule individually by including them as extra repos in the ```config``` file
 - If your diff is empty, the output from the server will be `unrecognized input`. Nothing bad happens, but it can be confusing.
+
+## Run in the background with systemd
+To run this in the background with `systemd` as a `user` unit (i.e. not requiring root permissions):
+- Place the provided file `systemd_unit.service` into `~/.config/systemd/user/` and give it a more reasonable name like `uncommitted-changes-sync.service`. In the file, adapt the path as required.
+- Run `systemctl --user restart uncommitted-changes-sync.service`
+
+If you did not run `ssh-add` since booting, you have to run it first before then (re-)starting the `systemd` unit.
