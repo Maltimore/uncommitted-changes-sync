@@ -50,8 +50,10 @@ Then, run the sync command (adjust the paths):
 - If your diff is empty, the output from the server will be `unrecognized input`. Nothing bad happens, but it can be confusing.
 
 ## Run in the background with systemd
+`systemd` can run this script for you in the background. Once started, it will continue working until reboot. `systemd` also takes care of the logs for you, including time-stamps.
+
 To run this in the background with `systemd` as a `user` unit (i.e. not requiring root permissions):
 - Place the provided file `systemd_unit.service` into `~/.config/systemd/user/` and give it a more reasonable name like `uncommitted-changes-sync.service`. In the file, adapt the path as required.
 - Run `systemctl --user restart uncommitted-changes-sync.service`
 
-If you did not run `ssh-add` since booting, you have to run it first before then (re-)starting the `systemd` unit.
+If you did not run `ssh-add` since booting, you have to run it first before then (re-)starting the `systemd` unit. This unfortunately also means that configuring the unit such that it will get started automatically on boot doesn't have the desired effect, as syncing will not work.
