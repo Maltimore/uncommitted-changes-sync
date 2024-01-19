@@ -12,15 +12,16 @@ CONFIG_PATH=${1:-"${HOME}/.config/uncommitted_changes_sync"}
 
 # loop over lines in config file
 # use sed to remove lines starting with "#" or empty lines
-sed -e "/^#\\|^\$/d" < "${CONFIG_PATH}" | while read localpath_unexpanded host remotepath; do
+sed -e "/^#\\|^\$/d" < "${CONFIG_PATH}" | while read localpath_unexpanded git_branch host remotepath; do
     # in case there's something like $HOME in the localpath, evaluate it to expand path
     eval localpath=$localpath_unexpanded
     echo
     echo Location
     echo "  local path:  $localpath"
+    echo "  git branch:  $git_branch"
     echo "  host:        $host"
     echo "  remote path: $remotepath"
-    ${SCRIPT_DIR}/inotifydo ${SCRIPT_DIR}/git_upd $localpath $host $remotepath &
+    ${SCRIPT_DIR}/inotifydo ${SCRIPT_DIR}/git_upd $localpath $git_branch $host $remotepath &
 done;
 
 echo $(date) "Done setting up syncers."
