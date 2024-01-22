@@ -5,7 +5,3 @@ Description=Uncommitted changes syncer
 Type=simple
 ExecStart=/home/username/repos/uncommitted-changes-sync/sync /home/username/.config/uncommitted-changes-sync
 Restart=on-failure
-
-[Install]
-WantedBy=default.target
-
