@@ -4,16 +4,21 @@
 last="$(date +%s%3N)"
 inotifywait -mrqe modify -e create -e delete $2 | while read event; do
     this="$(date +%s%3N)"
-    
-    # if last update is more than 200 msecs ago
-    if [ $(($this - $last)) -gt 200 ]; then
-        # sleeping to wait for all incoming inotify events which we don't want to process
-        sleep 0.2
+
+    # if last update is more than x msecs ago, we want to handle this event,
+    # otherwise skip
+    if [ $(($this - $last)) -gt 100 ]; then
+        # sleeping to wait for all incoming inotify events which we don't want
+        # to process
+        # The order in which the following commands are run has been chosen
+        # with some care even though it may not seem so
+        sleep 0.1
         last="$(date +%s%3N)"
-        echo event handled "$event"
+        echo Handling event: "$event"
         "$@" 2>&1 | awk '{print " ",$0}'
+        echo Syncing done
     else
-        echo event skipped "$event"
+        echo Event skipped: "$event"
     fi;
 done;
 

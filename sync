@@ -4,6 +4,7 @@ echo Starting uncommitted-changes-sync
 trap "kill 0" EXIT
 
 SCRIPT_DIR=${0%/*}
+echo Assuming the directory with the sync scripts is ${SCRIPT_DIR}
 
 # by default, we expect the config file to be in ~/.config/uncommited_changes_sync
 CONFIG_PATH=${1:-"${HOME}/.config/uncommitted_changes_sync"}
