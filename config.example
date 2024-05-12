@@ -1,4 +1,4 @@
 # lines starting with "#" and empty lines are ignored
 
-$HOME/repos/repo_name example/upstream/git_branch ssh_hostname /home/your_remote_user/your_remote_repository
-$HOME/repos/other_repo_name example_origin/git_branch other_ssh_hostname /home/your_remote_user/your_other_remote_repository
+$HOME/repos/repo_name upstream/git_branch ssh_hostname /home/your_remote_user/your_remote_repository
+$HOME/repos/repo2 origin/git_branch other_ssh_hostname /home/your_remote_user/repo2
