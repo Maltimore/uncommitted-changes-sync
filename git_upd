@@ -10,10 +10,13 @@ GIT_BRANCH="${2:?"Branch to compare with not specified"}"
 REMOTE_HOST="${3:?"Remote host not specified!"}"
 REMOTE_DIR="${4:?"Remote directory not specified!"}"
 
-# check if the diff is empty, if so, do nothing (i.e. do not sync)
+# check if the diff is empty, if so only reset the remote repository, then exit (early exit here!)
+git -C "$LOCAL_DIR" update-index --refresh
 git -C "$LOCAL_DIR" diff-index --quiet HEAD --
 if [ $? -eq 0 ]; then
-  echo "git_upd called but diff was empty"
+  echo "Git status was empty, therefore just clearing remote repo"
+  ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' reset --hard '$GIT_BRANCH' "
+  echo "Exit status of the clearing operation was $?"
   exit
 fi
 
