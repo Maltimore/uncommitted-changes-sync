@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# credit: chrstphr
+# credit: @chrstphr
 # $1 is local directory path
-# $2 is ssh remote host
-# $3 is remote directory path
+# $2 is git branch to create diff against
+# $3 is ssh remote host
+# $4 is remote directory path
 
 LOCAL_DIR="${1:?"Local directory not specified!"}"
 GIT_BRANCH="${2:?"Branch to compare with not specified"}"
