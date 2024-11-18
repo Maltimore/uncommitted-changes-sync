@@ -10,6 +10,12 @@ GIT_BRANCH="${2:?"Branch to compare with not specified"}"
 REMOTE_HOST="${3:?"Remote host not specified!"}"
 REMOTE_DIR="${4:?"Remote directory not specified!"}"
 
+# check if the diff is empty, if so, do nothing (i.e. do not sync)
+git -C "$LOCAL_DIR" diff-index --quiet HEAD --
+if [ $? -eq 0 ]; then
+  echo "git_upd called but diff was empty"
+  exit
+fi
 
 # git apply --index adds files that are untracked into the index, such that on
 # the next git reset, this file will be deleted. Therefore, there will be no
@@ -19,8 +25,8 @@ git -C "$LOCAL_DIR" diff "$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_DI
 # get the exit status of the above command (even if the command within ssh fails, that is propagated to here)
 exit_status=$?
 if [ $exit_status -eq 0 ]; then
-    echo "Remote command succeeded (status 0)"
+  echo "Remote command succeeded (status 0)"
 else
-    echo "Remote command failed with status $exit_status"
-    notify-send "Uncommitted-changes-sync error" "${LOCAL_DIR}"
+  echo "Remote command failed with status $exit_status"
+  notify-send "Uncommitted-changes-sync error" "${LOCAL_DIR}"
 fi
