@@ -1,21 +1,19 @@
 #!/usr/bin/env bash
 # credit: chrstphr
 
-last="$(date +%s%3N)"
+# dummy-initialize the last time we synced
+last_synced_time="$(date +%s%3N)"
 inotifywait -mrqe modify -e create -e delete $2 | while read event; do
-    this="$(date +%s%3N)"
+    this_event_time="$(date +%s%3N)"
 
-    # if last update is more than x msecs ago, we want to handle this event,
-    # otherwise skip
-    if [ $(($this - $last)) -gt 2000 ]; then
-        # sleeping to wait for all incoming inotify events which we don't want
-        # to process
-        last="$(date +%s%3N)"
+    # only if the last update is more than x msecs ago, we want to handle this event
+    if [ $(($this_event_time - $last_synced_time)) -gt 2000 ]; then
+        last_synced_time=$this_event_time
         echo Handling event: "$event"
         "$@" 2>&1 | awk '{print " ",$0}'
-        echo Finished handling event "$event" in $(($(date +%s%3N) - $last)) ms
+        echo Finished handling event "$event" in $(($(date +%s%3N) - $last_synced_time)) ms
     else
-        echo Event skipped: "$event"
+        echo Event skipped because it was less than 2 seconds after the previous handled event: "$event"
     fi;
 done;
 
