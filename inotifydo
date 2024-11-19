@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 # credit: chrstphr
 
-# dummy-initialize the last time we synced
-last_synced_time="$(date +%s%3N)"
-inotifywait -mrqe modify -e create -e delete $2 | while read event; do
-    this_event_time="$(date +%s%3N)"
+# initialize the last time we synced (seconds since 1970-01-01)
+last_synced_time=0
+inotifywait --exclude '.git' -mrq -e modify -e create -e delete --timefmt '%s' --format '%T %e:%w%f' $2 | while read timestamp event; do
+    echo Event: "$event"
+    echo Timestamp: "$timestamp"
 
-    # only if the last update is more than x msecs ago, we want to handle this event
-    if [ $(($this_event_time - $last_synced_time)) -gt 2000 ]; then
-        last_synced_time=$this_event_time
-        echo Handling event: "$event"
+    # only if the last update is more than 1 second ago do we want to handle this event
+    if [ $(("$timestamp" - "$last_synced_time")) -gt 1 ]; then
+        last_synced_time="$timestamp"
+        echo Calling git_upd
         "$@" 2>&1 | awk '{print " ",$0}'
-        echo Finished handling event "$event" in $(($(date +%s%3N) - $last_synced_time)) ms
+        echo Finished syncing at "$(date)"
     else
-        echo Event skipped because it was less than 2 seconds after the previous handled event: "$event"
+        echo Event skipped because it occurred less than the wait time after the previous handled event
     fi;
 done;
 
