@@ -9,6 +9,13 @@ inotifywait --exclude '.git' -mrq -e modify -e create -e delete --timefmt '%s' -
     # Give the file system time to properly handle the file changes that occurred
     sleep 0.2
 
+    # if the timestamp is more than 10 seconds ago, we're not syncing it. We don't sync because this means that the server is extremely slow to respond and we need to clear the event queue.
+    current_time="$(date +%s)"
+    if [ $(("$current_time" - "$timestamp")) -gt 10 ]; then
+      echo "Ignoring event because it happened far in the past"
+      continue
+    fi
+
     # only if the last update is more than 1 second ago do we want to handle this event
     if [ $(("$timestamp" - "$last_synced_time")) -gt 1 ]; then
         last_synced_time="$timestamp"
