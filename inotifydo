@@ -6,6 +6,8 @@ last_synced_time=0
 inotifywait --exclude '.git' -mrq -e modify -e create -e delete --timefmt '%s' --format '%T %e:%w%f' $2 | while read timestamp event; do
     echo Event: "$event"
     echo Timestamp: "$timestamp"
+    # Give the file system time to properly handle the file changes that occurred
+    sleep 0.2
 
     # only if the last update is more than 1 second ago do we want to handle this event
     if [ $(("$timestamp" - "$last_synced_time")) -gt 1 ]; then
