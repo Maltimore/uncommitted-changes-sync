@@ -5,14 +5,15 @@
 # $3 is ssh remote host
 # $4 is remote directory path
 
-LOCAL_DIR="${1:?"Local directory not specified!"}"
+LOCAL_PATH="${1:?"Local directory not specified!"}"
+LOCAL_DIR=$(basename "$LOCAL_PATH")
 GIT_BRANCH="${2:?"Branch to compare with not specified"}"
 REMOTE_HOST="${3:?"Remote host not specified!"}"
 REMOTE_DIR="${4:?"Remote directory not specified!"}"
 
 # check if the diff is empty, if so only reset the remote repository, then early exit
-git -C "$LOCAL_DIR" update-index --refresh -q
-git -C "$LOCAL_DIR" diff-index --quiet HEAD --
+git -C "$LOCAL_PATH" update-index --refresh -q
+git -C "$LOCAL_PATH" diff-index --quiet HEAD --
 if [ $? -eq 0 ]; then
   echo "Git status was empty, therefore just clearing remote repo"
   ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' reset --hard '$GIT_BRANCH' "
@@ -25,7 +26,7 @@ fi
 # the next git reset, this file will be deleted. Therefore, there will be no
 # conflicts with untracked files
 echo "Syncing"
-git -C "$LOCAL_DIR" diff "$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' reset --hard '$GIT_BRANCH' && git -C '$REMOTE_DIR' apply --index --whitespace=nowarn - "
+git -C "$LOCAL_PATH" diff "$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' reset --hard '$GIT_BRANCH' && git -C '$REMOTE_DIR' apply --index --whitespace=nowarn - "
 
 # get the exit status of the above command (even if the command within ssh fails, that is propagated to here) to send an error notification if necessary
 exit_status=$?
