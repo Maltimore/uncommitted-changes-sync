@@ -18,7 +18,7 @@ if [ $? -eq 0 ]; then
   echo "Git status was empty, therefore just clearing remote repo"
   ssh "$REMOTE_HOST" " git -C '$REMOTE_DIR' reset --hard '$GIT_BRANCH' "
   echo "Exit status of the clearing operation was $?"
-  notify-send "Sync ✓" "reset remote repo of ${LOCAL_DIR}"
+  notify-send "${LOCAL_DIR} ✓" "Reset remote repo"
   exit
 fi
 
@@ -32,8 +32,8 @@ git -C "$LOCAL_PATH" diff "$GIT_BRANCH" | ssh "$REMOTE_HOST" " git -C '$REMOTE_D
 exit_status=$?
 if [ $exit_status -eq 0 ]; then
   echo "Remote command succeeded (status 0)"
-  notify-send "Sync ✓" "${LOCAL_DIR}"
+  notify-send "${LOCAL_DIR} ✓" "Syncing successful"
 else
   echo "Remote command failed with status $exit_status"
-  notify-send "Sync ❌" "${LOCAL_DIR}"
+  notify-send "❌❌❌ ${LOCAL_DIR} ❌❌❌" "Syncing FAILED"
 fi
